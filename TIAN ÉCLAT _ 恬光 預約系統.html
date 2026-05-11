@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://tianeclatatelier-eng.github.io/tianeclatatelier/ -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIAN ÉCLAT | 恬光 預約系統</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?min"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#B46060',
+                            accent: '#F3E99F',
+                            bg: '#FFF4E0',
+                            dark: '#2C3333',
+                            border: '#E8E2E2',
+                            muted: '#4F4A45'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', '"Noto Sans TC"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #2C3333;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                background: linear-gradient(to right, #ffffff 0%, #ffffff 42%, #F9F7F5 42%, #F9F7F5 100%);
+                background-attachment: fixed;
+            }
+        }
+
+        .korean-input {
+            width: 100%;
+            padding: 1.15rem 1.5rem;
+            background-color: #ffffff;
+            border: 1px solid #EAE5E0;
+            border-radius: 2rem;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        @media (min-width: 768px) {
+            .korean-input {
+                font-size: 0.95rem;
+            }
+        }
+
+        .korean-input:focus {
+            border-color: #B46060;
+            box-shadow: 0 4px 12px rgba(180, 96, 96, 0.08);
+        }
+
+        .korean-input::placeholder {
+            color: #C1B9B0;
+            font-weight: 400;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .marquee-container {
+            animation: marquee 45s linear infinite;
+        }
+
+        .assessment-card-input:checked + .assessment-card {
+            border-color: #B46060;
+            background-color: rgba(180, 96, 96, 0.03);
+            transform: translateY(-2px);
+        }
+
+        .assessment-card-input:checked + .assessment-card span {
+            color: #B46060;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal-overlay {
+            background-color: rgba(44, 51, 51, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .straight-text {
+            font-style: normal !important;
+        }
+
+        .section-label {
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #9A948F;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: '';
+            height: 1px;
+            flex-grow: 1;
+            background: #EAE5E0;
+        }
+    </style>
+</head>
+    <style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, "Noto Sans TC", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.bottom-0{bottom:0px}.right-8{right:2rem}.top-0{top:0px}.top-1\/2{top:50%}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mt-0\.5{margin-top:0.125rem}.mt-10{margin-top:2.5rem}.mt-12{margin-top:3rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.ml-2{margin-left:0.5rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-20{height:5rem}.h-24{height:6rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-\[1px\]{height:1px}.h-\[300px\]{height:300px}.h-full{height:100%}.min-h-\[120px\]{min-height:120px}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-20{width:5rem}.w-24{width:6rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.max-w-\[280px\]{max-width:280px}.max-w-\[320px\]{max-width:320px}.max-w-\[340px\]{max-width:340px}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-grow{flex-grow:1}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-not-allowed{cursor:not-allowed}.cursor-pointer{cursor:pointer}.resize-none{resize:none}.appearance-none{-webkit-appearance:none;appearance:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.gap-x-12{column-gap:3rem}.gap-y-10{row-gap:2.5rem}.space-y-10 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-\[2\.5rem\]{border-radius:2.5rem}.rounded-\[2rem\]{border-radius:2rem}.rounded-\[3rem\]{border-radius:3rem}.rounded-\[40px\]{border-radius:40px}.rounded-\[4rem\]{border-radius:4rem}.rounded-full{border-radius:9999px}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-\[\#EAE5E0\]{--tw-border-opacity:1;border-color:rgb(234 229 224 / var(--tw-border-opacity, 1))}.border-\[\#F2EEEB\]{--tw-border-opacity:1;border-color:rgb(242 238 235 / var(--tw-border-opacity, 1))}.border-black\/20{border-color:rgb(0 0 0 / 0.2)}.border-brand-accent\/20{border-color:rgb(243 233 159 / 0.2)}.border-brand-accent\/30{border-color:rgb(243 233 159 / 0.3)}.border-brand-accent\/40{border-color:rgb(243 233 159 / 0.4)}.border-brand-bg{--tw-border-opacity:1;border-color:rgb(255 244 224 / var(--tw-border-opacity, 1))}.border-brand-primary\/10{border-color:rgb(180 96 96 / 0.1)}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-\[\#F9F7F5\]{--tw-border-opacity:1;border-color:rgb(249 247 245 / var(--tw-border-opacity, 1))}.bg-\[\#EAE5E0\]{--tw-bg-opacity:1;background-color:rgb(234 229 224 / var(--tw-bg-opacity, 1))}.bg-brand-bg{--tw-bg-opacity:1;background-color:rgb(255 244 224 / var(--tw-bg-opacity, 1))}.bg-brand-bg\/30{background-color:rgb(255 244 224 / 0.3)}.bg-brand-dark{--tw-bg-opacity:1;background-color:rgb(44 51 51 / var(--tw-bg-opacity, 1))}.bg-brand-primary\/10{background-color:rgb(180 96 96 / 0.1)}.bg-brand-primary\/30{background-color:rgb(180 96 96 / 0.3)}.bg-brand-primary\/5{background-color:rgb(180 96 96 / 0.05)}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/40{background-color:rgb(255 255 255 / 0.4)}.bg-white\/60{background-color:rgb(255 255 255 / 0.6)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-white{--tw-gradient-from:#fff var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-10{padding:2.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.pb-1{padding-bottom:0.25rem}.pb-20{padding-bottom:5rem}.pb-3{padding-bottom:0.75rem}.pr-12{padding-right:3rem}.pt-10{padding-top:2.5rem}.pt-16{padding-top:4rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.pt-8{padding-top:2rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.font-sans{font-family:Inter, "Noto Sans TC", sans-serif}.font-serif{font-family:"Playfair Display", serif}.font-mono{font-family:"JetBrains Mono", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[12px\]{font-size:12px}.text-\[13px\]{font-size:13px}.text-\[14px\]{font-size:14px}.text-\[15px\]{font-size:15px}.text-\[16px\]{font-size:16px}.text-\[20px\]{font-size:20px}.text-\[22px\]{font-size:22px}.text-\[26px\]{font-size:26px}.text-\[28px\]{font-size:28px}.text-\[32px\]{font-size:32px}.text-\[42px\]{font-size:42px}.font-black{font-weight:900}.font-bold{font-weight:700}.font-light{font-weight:300}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.tracking-\[0\.25em\]{letter-spacing:0.25em}.tracking-\[0\.2em\]{letter-spacing:0.2em}.tracking-\[0\.3em\]{letter-spacing:0.3em}.tracking-\[0\.4em\]{letter-spacing:0.4em}.tracking-\[0\.5em\]{letter-spacing:0.5em}.tracking-\[0\.6em\]{letter-spacing:0.6em}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.text-black\/20{color:rgb(0 0 0 / 0.2)}.text-black\/30{color:rgb(0 0 0 / 0.3)}.text-black\/40{color:rgb(0 0 0 / 0.4)}.text-black\/50{color:rgb(0 0 0 / 0.5)}.text-black\/60{color:rgb(0 0 0 / 0.6)}.text-black\/70{color:rgb(0 0 0 / 0.7)}.text-black\/80{color:rgb(0 0 0 / 0.8)}.text-brand-primary{--tw-text-opacity:1;color:rgb(180 96 96 / var(--tw-text-opacity, 1))}.text-brand-primary\/30{color:rgb(180 96 96 / 0.3)}.text-brand-primary\/40{color:rgb(180 96 96 / 0.4)}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.accent-black{accent-color:#000}.opacity-0{opacity:0}.opacity-30{opacity:0.3}.opacity-40{opacity:0.4}.opacity-50{opacity:0.5}.opacity-70{opacity:0.7}.opacity-80{opacity:0.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.hover\:border-brand-primary\/20:hover{border-color:rgb(180 96 96 / 0.2)}.hover\:bg-brand-primary:hover{--tw-bg-opacity:1;background-color:rgb(180 96 96 / var(--tw-bg-opacity, 1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:text-\[32px\]{font-size:32px}.sm\:text-\[52px\]{font-size:52px}}@media (min-width: 768px){.md\:sticky{position:sticky}.md\:top-24{top:6rem}.md\:mb-10{margin-bottom:2.5rem}.md\:mb-12{margin-bottom:3rem}.md\:mb-14{margin-bottom:3.5rem}.md\:block{display:block}.md\:h-\[450px\]{height:450px}.md\:w-12{width:3rem}.md\:w-\[42\%\]{width:42%}.md\:w-\[58\%\]{width:58%}.md\:max-w-\[300px\]{max-width:300px}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:gap-16{gap:4rem}.md\:rounded-\[2\.5rem\]{border-radius:2.5rem}.md\:rounded-\[3\.5rem\]{border-radius:3.5rem}.md\:rounded-\[3rem\]{border-radius:3rem}.md\:p-10{padding:2.5rem}.md\:p-12{padding:3rem}.md\:p-8{padding:2rem}.md\:px-8{padding-left:2rem;padding-right:2rem}.md\:py-16{padding-top:4rem;padding-bottom:4rem}.md\:text-\[11px\]{font-size:11px}.md\:text-\[12px\]{font-size:12px}.md\:text-\[13px\]{font-size:13px}.md\:text-\[15px\]{font-size:15px}.md\:text-\[17px\]{font-size:17px}.md\:text-\[26px\]{font-size:26px}.md\:text-\[32px\]{font-size:32px}.md\:text-\[58px\]{font-size:58px}.md\:tracking-\[0\.8em\]{letter-spacing:0.8em}}@media (min-width: 1024px){.lg\:w-\[38\%\]{width:38%}.lg\:w-\[62\%\]{width:62%}.lg\:gap-32{gap:8rem}.lg\:px-12{padding-left:3rem;padding-right:3rem}}</style></head>
+<body class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8 md:py-16 md:px-8 lg:px-12">
+        <div class="flex flex-col md:flex-row gap-10 md:gap-16 lg:gap-32">
+            
+            <!-- Left Side -->
+            <div class="w-full md:w-[42%] lg:w-[38%] flex flex-col h-full md:sticky md:top-24">
+                <div class="mb-10 md:mb-14">
+                    <h1 class="leading-none mb-8 md:mb-12">
+                        <span class="block text-[12px] md:text-[13px] tracking-[0.6em] md:tracking-[0.8em] font-light uppercase mb-6 md:mb-10 text-black/40 straight-text">Atelier</span>
+                        <span class="block font-serif font-medium text-[42px] sm:text-[52px] md:text-[58px] tracking-tight mb-4 text-black straight-text">TIAN ÉCLAT</span>
+                        <span class="block text-[28px] md:text-[32px] font-light tracking-[0.4em] text-black/60 ml-1 straight-text">恬 光</span>
+                    </h1>
+                    <div class="w-10 md:w-12 h-[1px] bg-brand-primary/30 mb-8 md:mb-10"></div>
+                    <div class="space-y-4">
+                        <p class="text-[16px] md:text-[17px] text-black/80 leading-relaxed font-bold tracking-tight straight-text">
+                            「恬光．專屬於妳的光」
+                        </p>
+                        <p class="text-[14px] md:text-[15px] text-black/50 font-medium max-w-[280px] md:max-w-[300px] leading-relaxed straight-text">
+                            在不刻意的修飾之中，回歸剛好的質感。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Guestbook -->
+                <div class="mt-8 flex-grow overflow-hidden flex flex-col relative">
+                    <div class="flex items-center gap-3 mb-10 z-10 py-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square w-4 h-4 text-black/30"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg>
+                        <span class="text-[11px] tracking-[0.4em] uppercase text-black/40 font-bold straight-text">Latest Reviews 顧客回饋</span>
+                    </div>
+                    
+                    <div class="relative h-[300px] md:h-[450px] overflow-hidden">
+                        <div id="reviews-marquee" class="marquee-container space-y-8">
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"眉毛做完超自然，完全沒有尷尬期，大推！"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">子 珊</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.04.12</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"手法很輕，我竟然睡了一覺醒來就變美了。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">珮 汝</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.03.28</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"老師很有耐心，拯救了我的不對稱眉。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">陳 宜 樺</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.03.15</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"起床就能出門，省下超多畫眉時間！"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">王 庭 語</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.05.02</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"色澤很透亮，這就是我要的高質感。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">陳 毓 璇</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.04.20</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"眉毛做完超自然，完全沒有尷尬期，大推！"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">子 珊</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.04.12</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"手法很輕，我竟然睡了一覺醒來就變美了。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">珮 汝</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.03.28</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"老師很有耐心，拯救了我的不對稱眉。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">陳 宜 樺</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.03.15</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"起床就能出門，省下超多畫眉時間！"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">王 庭 語</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.05.02</span>
+                    </div>
+                </div>
+            
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"色澤很透亮，這就是我要的高質感。"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">陳 毓 璇</span>
+                        <span class="text-[10px] text-black/30 font-mono">2024.04.20</span>
+                    </div>
+                </div>
+            </div>
+                        <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent pointer-events-none z-10"></div>
+                        <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
+                    </div>
+                </div>
+                <div class="hidden md:block pt-16 mt-12">
+                    <div class="text-[10px] uppercase tracking-[0.3em] text-black/20 font-bold">
+                        © 2026 TIAN ÉCLAT ATELIER
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="w-full md:w-[58%] lg:w-[62%]">
+                <div id="form-container">
+                    <section class="p-6 md:p-8 bg-brand-primary/5 rounded-[2rem] md:rounded-[2.5rem] border border-[#F2EEEB] mb-6">
+                        <h3 class="text-[11px] md:text-[12px] font-black text-black/40 mb-6 text-center uppercase tracking-[0.4em] flex items-center justify-center gap-2 straight-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" aria-hidden="true" class="lucide lucide-calendar w-4 h-4 opacity-30"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> 預約重要須知 Notice
+                        </h3>
+                        <div class="space-y-5 text-[14px] leading-relaxed text-black/70 font-medium">
+                            <div class="flex gap-4">
+                                <span class="text-brand-primary font-black text-[15px]">01.</span>
+                                <p class="flex-1">為維持服務細節，敬請準時赴約。遲到逾 15 分鐘可能需調整項目或改期。</p>
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="text-brand-primary font-black text-[15px]">02.</span>
+                                <p class="flex-1">送出表單後請於 24 小時內預付訂金 $1,000 元。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="flex flex-col items-center mb-10 text-center">
+                        <span class="text-[11px] tracking-[0.5em] uppercase text-black/30 font-bold mb-4 straight-text">Appointment Form / 預約申請</span>
+                        <div class="w-10 h-[1px] bg-[#EAE5E0]"></div>
+                    </div>
+
+                    <form id="reservation-form" class="space-y-10 pb-20">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                            <div>
+                                <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-3 font-bold ml-1 straight-text">姓名 Name</label>
+                                <input required="" type="text" id="name" class="korean-input" placeholder="請輸入全名">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-3 font-bold ml-1 straight-text">電話 Phone</label>
+                                <input required="" type="tel" id="phone" class="korean-input" placeholder="09xx-xxx-xxx">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-4 font-bold ml-1 text-center straight-text">施作項目 Service</label>
+                            <div class="relative">
+                                <select id="service" class="korean-input appearance-none pr-12 cursor-pointer text-center relative z-10">
+                                    <option value="misty_brows">霧眉 (Misty Brows)</option>
+                                    <option value="misty_lips">霧唇 (Misty Lips)</option>
+                                </select>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down absolute right-8 top-1/2 -translate-y-1/2 w-4 h-4 text-black/20 pointer-events-none z-0"><path d="m6 9 6 6 6-6"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Assessment -->
+                        <div class="space-y-6 pt-4">
+                            <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-2 font-bold ml-1 text-center straight-text">施作前評估 Pre-Procedure Assessment</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="cursor-pointer group relative">
+                                    <input type="radio" name="brow_experience" value="new" class="assessment-card-input sr-only" onchange="handleExperienceChange(this)">
+                                    <div class="assessment-card flex items-center justify-center p-5 rounded-3xl border border-[#EAE5E0] bg-white transition-all duration-300">
+                                        <span class="text-[13px] font-bold text-black/50 straight-text">初次嘗試霧眉</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group relative">
+                                    <input type="radio" name="brow_experience" value="previous" class="assessment-card-input sr-only" onchange="handleExperienceChange(this)">
+                                    <div class="assessment-card flex items-center justify-center p-5 rounded-3xl border border-[#EAE5E0] bg-white transition-all duration-300">
+                                        <span class="text-[13px] font-bold text-black/50 straight-text">曾有霧眉經驗</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group relative">
+                                    <input type="radio" name="brow_experience" value="correction" class="assessment-card-input sr-only" onchange="handleExperienceChange(this)">
+                                    <div class="assessment-card flex items-center justify-center p-5 rounded-3xl border border-[#EAE5E0] bg-white transition-all duration-300">
+                                        <span class="text-[13px] font-bold text-black/50 straight-text">需舊底色改眉</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div id="suggestion-container" class="space-y-4">
+                                <div id="first-time-suggestion" class="hidden animate-in fade-in slide-in-from-top-2 duration-500">
+                                    <div class="p-6 rounded-[2rem] bg-brand-primary/5 border border-brand-primary/10 flex items-start gap-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sparkles" aria-hidden="true" class="lucide lucide-sparkles w-5 h-5 text-brand-primary/40 mt-0.5"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+                                        <div class="space-y-2">
+                                            <span class="text-[11px] uppercase tracking-widest text-brand-primary font-black">Design Inspiration</span>
+                                            <p class="text-[13px] text-black/60 leading-relaxed font-medium straight-text">期待與妳初次相遇。為了協助美學分析，請提供一張清晰的正面全臉照。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="previous-experience-suggestion" class="hidden animate-in fade-in slide-in-from-top-2 duration-500">
+                                    <div class="p-6 rounded-[2rem] bg-brand-primary/5 border border-brand-primary/10 flex items-start gap-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="heart" aria-hidden="true" class="lucide lucide-heart w-5 h-5 text-brand-primary/40 mt-0.5"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+                                        <div class="space-y-2">
+                                            <span class="text-[11px] uppercase tracking-widest text-brand-primary font-black">Professional Assessment</span>
+                                            <p class="text-[13px] text-black/60 leading-relaxed font-medium straight-text">歡迎再次光臨。為精確掌握眉毛狀態，請提供一張光線充足的正面近照。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="correction-suggestion" class="hidden animate-in fade-in slide-in-from-top-2 duration-500">
+                                    <div class="p-6 rounded-[2rem] bg-brand-primary/5 border border-brand-primary/10 flex items-start gap-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="info" aria-hidden="true" class="lucide lucide-info w-5 h-5 text-brand-primary/40 mt-0.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                        <div class="space-y-2">
+                                            <span class="text-[11px] uppercase tracking-widest text-brand-primary font-black">Professional Advice</span>
+                                            <p class="text-[13px] text-black/60 leading-relaxed font-medium straight-text">針對含有舊有底色的狀態，為追求 TIAN ÉCLAT 標誌性的清透色彩質感，建議若底色較飽和可先尋求專業除色建議（<strong>恬光目前暫無提供除色項目</strong>）。請務必提供清晰的現狀照片，由老師為妳進行精準的轉色評估，確保能雕琢出最符合妳理想的設計。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Area -->
+                            <div class="relative mt-8 p-10 rounded-[3rem] border-2 border-dashed border-[#EAE5E0] bg-white/40 transition-all duration-500 hover:border-brand-primary/20 group text-center">
+                                <input type="file" id="brow-photo" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="handlePhotoPreview(this)">
+                                <div id="upload-placeholder" class="flex flex-col items-center space-y-5">
+                                    <div class="w-14 h-14 bg-brand-primary/5 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera w-6 h-6 text-brand-primary/30"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg></div>
+                                    <div class="space-y-3">
+                                        <p class="text-[14px] font-bold text-black/70 straight-text">眉毛現況照片上傳</p>
+                                        <p class="text-[12px] text-black/40 leading-relaxed max-w-[320px] mx-auto straight-text italic">「預先上傳照片，縮短現場評估等待時光。」</p>
+                                    </div>
+                                </div>
+                                <div id="upload-preview" class="hidden flex-col items-center space-y-4 relative z-20">
+                                    <img src="" id="preview-img" class="w-24 h-24 object-cover rounded-2xl shadow-lg border-2 border-white mx-auto">
+                                    <p class="text-[11px] text-brand-primary font-black uppercase tracking-[0.2em] straight-text">Photo Ready</p>
+                                    <button type="button" id="reset-photo-btn" class="text-[10px] text-black/30 underline uppercase cursor-pointer hover:text-black">重新更換</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                            <div>
+                                <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-3 font-bold ml-1 straight-text">預約日期 Date</label>
+                                <input required="" type="date" id="date" class="korean-input cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] uppercase tracking-[0.25em] text-black/40 mb-3 font-bold ml-1 straight-text">時段 Time</label>
+                                <div class="relative">
+                                    <select required="" id="time" class="korean-input appearance-none pr-12 cursor-pointer text-center relative z-10" disabled="">
+                                        <option value="">請先選擇日期</option>
+                                    </select>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down absolute right-8 top-1/2 -translate-y-1/2 w-4 h-4 text-black/20 pointer-events-none z-0"><path d="m6 9 6 6 6-6"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Health Declaration -->
+                        <section class="pt-8">
+                            <div class="p-6 md:p-10 bg-white/60 backdrop-blur-sm rounded-[2.5rem] md:rounded-[3rem] border border-[#F2EEEB] shadow-sm relative overflow-hidden">
+                                <div class="mb-8 flex items-center justify-center gap-4">
+                                    <span class="w-8 h-[1px] bg-brand-primary/10"></span>
+                                    <label class="text-[12px] font-black text-black/30 uppercase tracking-[0.4em] straight-text">Health Declaration / 健康聲明</label>
+                                    <span class="w-8 h-[1px] bg-brand-primary/10"></span>
+                                </div>
+                                <div id="contraindications-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+                                
+                                <div id="health-notes-container" class="mt-6 hidden">
+                                    <label class="block text-[12px] uppercase tracking-wider mb-2 font-black straight-text">狀況詳細說明 / Please specify</label>
+                                    <textarea id="health-notes" class="korean-input min-h-[120px] text-[14px] py-4 rounded-3xl resize-none bg-brand-bg/30" placeholder="請在此輸入詳細說明..."></textarea>
+                                </div>
+
+                                <div class="mt-10 pt-10 border-t border-[#F2EEEB] text-center space-y-2">
+                                    <p class="text-[13px] text-black/50 leading-relaxed straight-text">為維護您的安全與術後效果，請務必誠實選取。</p>
+                                    <p class="text-[12px] text-brand-primary font-bold tracking-widest opacity-80 pt-2">點擊即代表您已詳閱並確認。</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-center pt-8 mt-10">
+                                <label class="flex items-center gap-4 cursor-pointer group">
+                                    <input type="checkbox" id="agreement" required="" class="w-5 h-5 rounded border-[#EAE5E0] text-black accent-black">
+                                    <span class="text-[13px] text-black/70 uppercase tracking-[0.2em] font-bold straight-text">本人確認上述健康狀況無誤 I Confirm</span>
+                                </label>
+                            </div>
+                        </section>
+
+                        <!-- Payment -->
+                        <section class="pt-10">
+                            <div class="p-8 md:p-12 bg-white rounded-[2.5rem] md:rounded-[3.5rem] border border-brand-accent/20 shadow-xl text-center">
+                                <span class="text-[10px] md:text-[11px] text-black opacity-40 uppercase tracking-[0.6em] mb-4 font-black straight-text">Payment Method</span>
+                                <h3 class="text-[22px] md:text-[26px] font-serif font-medium text-black tracking-[0.3em] mb-10 straight-text">席位預約匯款</h3>
+                                
+                                <div class="w-full max-w-[340px] mx-auto space-y-10">
+                                    <div class="space-y-2">
+                                        <span class="text-[10px] text-black opacity-30 uppercase tracking-[0.4em] font-black italic">連線商業銀行 (824)</span>
+                                        <div class="text-[26px] sm:text-[32px] font-sans font-light tracking-[0.25em] border-b-2 border-brand-accent/30 pb-3 text-black/80">111005579803</div>
+                                    </div>
+                                    
+                                    <button type="button" id="copy-btn" class="inline-flex items-center gap-4 px-10 py-4 bg-brand-dark text-white rounded-full transition-all duration-300 hover:bg-brand-primary">
+                                        <span id="copy-text" class="text-[11px] font-black uppercase tracking-[0.2em] straight-text">Copy Account</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy w-4 h-4 opacity-50"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                                    </button>
+
+                                    <div class="pt-10 border-t border-brand-bg text-[13px] font-black straight-text">
+                                        Reservation Deposit: <span class="text-brand-primary">$1,000</span><br>
+                                        <span class="opacity-50">請於 24 小時內完成匯款以保留預約席位</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Final Steps -->
+                        <div class="pt-8 space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="block text-[14px] uppercase tracking-wider text-black mb-3 font-black straight-text">帳號末五碼 Deposit</label>
+                                    <input required="" type="text" id="last-five" maxlength="5" class="korean-input" placeholder="匯款帳號末五碼">
+                                </div>
+                                <div class="flex items-end pb-3 text-[12px] text-brand-primary font-black leading-relaxed straight-text">預付訂金 $1,000 後請務必填寫，以便核對！</div>
+                            </div>
+                            <textarea id="other-notes" class="korean-input min-h-[120px] py-4 rounded-3xl resize-none" placeholder="其他備註..."></textarea>
+                            <button id="submit-btn" type="submit" disabled="" class="w-full py-6 rounded-[2rem] text-[16px] tracking-[0.4em] font-black uppercase transition-all duration-500 bg-brand-bg text-brand-primary opacity-50 cursor-not-allowed straight-text">確認提交預約</button>
+                            <div class="text-[12px] text-center mt-8 text-black opacity-30 tracking-[0.3em] uppercase straight-text">Secure Reservation Portal • TIAN ÉCLAT Atelier</div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="success-container" class="hidden text-center py-24 px-8 bg-white rounded-[4rem] border border-brand-accent/20">
+                    <div class="w-20 h-20 bg-brand-primary/5 rounded-full flex items-center justify-center mx-auto mb-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check text-brand-primary w-10 h-10"><path d="M20 6 9 17l-5-5"></path></svg></div>
+                    <h2 class="text-[32px] mb-6 tracking-[0.2em] font-serif straight-text">預約資料已成功送出</h2>
+                    <p class="text-[16px] text-black/60 mb-12 max-w-md mx-auto straight-text">感謝您的預定！我們將在 24 小時內與您確認細節。</p>
+                    <button id="reload-btn" class="text-[14px] uppercase border-b border-black/20 pb-1 straight-text">回到起始頁面</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="period-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-6 modal-overlay">
+        <div class="bg-white rounded-[40px] p-10 max-w-sm w-full shadow-2xl">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" aria-hidden="true" class="lucide lucide-alert-circle w-6 h-6 text-red-500"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg></div>
+                <h3 class="text-[20px] font-bold straight-text">生理期施作須知</h3>
+            </div>
+            <p class="text-[14px] opacity-70 mb-10 straight-text">生理期皮膚敏弱。建議避開前 3 天，以確保留色率佳。</p>
+            <div class="space-y-6">
+                <label class="block text-[13px] font-black text-center straight-text">目前是經期的第幾天？</label>
+                <div class="grid grid-cols-4 gap-3">
+                    <button data-day="1" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">1</button>
+                    <button data-day="2" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">2</button>
+                    <button data-day="3" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">3</button>
+                    <button data-day="4" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">4</button>
+                    <button data-day="5" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">5</button>
+                    <button data-day="6" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">6</button>
+                    <button data-day="7" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">7</button>
+                    <button data-day="8" class="day-btn py-3 rounded-2xl border border-brand-accent/40 font-bold">8</button>
+                </div>
+                <div id="period-result" class="hidden p-4 rounded-2xl text-center text-[14px] font-bold straight-text"></div>
+            </div>
+            <button id="close-period-modal-btn" class="w-full mt-10 py-5 bg-brand-dark text-white rounded-full text-[14px] font-bold uppercase tracking-widest hover:bg-brand-primary transition-colors">確認並關閉</button>
+        </div>
+    </div>
+
+    <script>
+        const CONTRAINDICATIONS = [
+            { id: "coagulation", title: "嚴重凝血功能障礙", desc: "出血風險高，建議不宜施作。", urgent: true },
+            { id: "infection", title: "法定傳染性疾病", desc: "安全性考量，暫不接案。", urgent: true },
+            { id: "heart", title: "嚴重心臟病與高血壓", desc: "特別是有服用抗凝血藥者。", urgent: true },
+            { id: "autoimmune", title: "自體免疫系統疾病", desc: "免疫力低下風險極高。", urgent: true },
+            { id: "keloid", title: "蟹足腫體質", desc: "易產生疤痕組織增生。", urgent: true },
+            { id: "medication", title: "特定藥物使用者", desc: "近半年內服用過 A 酸或進行化療者。", urgent: true },
+            { id: "skin", title: "皮膚狀況不穩", desc: "眉部有濕疹或嚴重痘痘。", urgent: false },
+            { id: "pregnancy", title: "懷孕與哺乳期", desc: "荷爾蒙變化影響留色。", urgent: false },
+            { id: "diabetes", title: "糖尿病患者", desc: "傷口癒合慢、易發炎。", urgent: false },
+            { id: "recent_beauty", title: "近期醫美行為", desc: "單月內過度雷射或填補。", urgent: false },
+            { id: "period", title: "生理期", desc: "皮膚敏弱出血量增多。", urgent: false },
+            { id: "g6pd", title: "蠶豆症 (G6PD)", desc: "需注意色料成分。", urgent: false },
+            { id: "none", title: "以上皆無 (None)", desc: "身體狀況良好。", urgent: false },
+            { id: "other", title: "其他 (Other)", desc: "請於備註說明。", urgent: false },
+        ];
+
+        const MOCK_COMMENTS = [
+            { user: "子 珊", text: "眉毛做完超自然，完全沒有尷尬期，大推！", date: "2024.04.12" },
+            { user: "珮 汝", text: "手法很輕，我竟然睡了一覺醒來就變美了。", date: "2024.03.28" },
+            { user: "陳 宜 樺", text: "老師很有耐心，拯救了我的不對稱眉。", date: "2024.03.15" },
+            { user: "王 庭 語", text: "起床就能出門，省下超多畫眉時間！", date: "2024.05.02" },
+            { user: "陳 毓 璇", text: "色澤很透亮，這就是我要的高質感。", date: "2024.04.20" }
+        ];
+
+        let selectedContraindications = [];
+        let periodDay = null;
+        let photoBase64Data = ""; // 已經移除多餘的 hidden input，改用變數儲存
+
+        // Google Apps Script 相容的初始化函數
+function initializeApp() {
+    lucide.createIcons();
+    renderReviews();
+    renderContraindications();
+    
+    // 依照台灣時區設定日曆最小值，避免早上無法選今天
+    const today = new Date();
+    const tzOffset = today.getTimezoneOffset() * 60000;
+    const localISODate = new Date(Date.now() - tzOffset).toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', localISODate);
+
+    // 綁定事件監聽器
+    const dateInput = document.getElementById('date');
+    if (dateInput) dateInput.addEventListener('change', handleDateChange);
+    
+    const timeSelect = document.getElementById('time');
+    if (timeSelect) timeSelect.addEventListener('change', checkFormValidity);
+    
+    const serviceSelect = document.getElementById('service');
+    if (serviceSelect) serviceSelect.addEventListener('change', checkFormValidity);
+    
+    const nameInput = document.getElementById('name');
+    if (nameInput) nameInput.addEventListener('input', checkFormValidity);
+    
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) phoneInput.addEventListener('input', checkFormValidity);
+    
+    const lastFiveInput = document.getElementById('last-five');
+    if (lastFiveInput) lastFiveInput.addEventListener('input', checkFormValidity);
+    
+    const agreementCheckbox = document.getElementById('agreement');
+    if (agreementCheckbox) agreementCheckbox.addEventListener('change', checkFormValidity);
+
+    // 綁定經驗選擇的 radio buttons
+    document.querySelectorAll('input[name="brow_experience"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            handleExperienceChange(this);
+        });
+    });
+
+    // 綁定照片上傳
+    const photoInput = document.getElementById('brow-photo');
+    if (photoInput) {
+        photoInput.addEventListener('change', function() {
+            handlePhotoPreview(this);
+        });
+    }
+
+    // 綁定重置照片按鈕
+    const resetPhotoBtn = document.getElementById('reset-photo-btn');
+    if (resetPhotoBtn) {
+        resetPhotoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            resetPhoto();
+        });
+    }
+
+    // 綁定複製帳號按鈕
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyToClipboard);
+    }
+
+    // 綁定重新載入按鈕
+    const reloadBtn = document.getElementById('reload-btn');
+    if (reloadBtn) {
+        reloadBtn.addEventListener('click', function() {
+            window.location.reload();
+        });
+    }
+
+    // 綁定生理期天數按鈕
+    document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            setPeriodDay(parseInt(this.dataset.day));
+        });
+    });
+
+    // 綁定關閉生理期模態框按鈕
+    const closePeriodModalBtn = document.getElementById('close-period-modal-btn');
+    if (closePeriodModalBtn) {
+        closePeriodModalBtn.addEventListener('click', closePeriodModal);
+    }
+}
+
+// 支援一般瀏覽器和 Apps Script
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    // Apps Script 或已載入完成的情況
+    setTimeout(initializeApp, 100);
+}
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-marquee');
+            container.innerHTML = [...MOCK_COMMENTS, ...MOCK_COMMENTS].map(c => `
+                <div class="px-8 py-10 rounded-[2.5rem] bg-white border border-[#F2EEEB] shadow-sm">
+                    <p class="text-[15px] text-black/70 mb-8 font-bold leading-relaxed">"${c.text}"</p>
+                    <div class="flex items-center justify-between border-t border-[#F9F7F5] pt-6">
+                        <span class="text-[11px] font-black uppercase">${c.user}</span>
+                        <span class="text-[10px] text-black/30 font-mono">${c.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderContraindications() {
+            const list = document.getElementById('contraindications-list');
+            list.innerHTML = CONTRAINDICATIONS.map(item => `
+                <label id="label-${item.id}" class="flex items-start gap-4 cursor-pointer p-5 rounded-2xl border border-[#F2EEEB] bg-white transition-all">
+                    <input type="checkbox" data-id="${item.id}" class="contra-check w-5 h-5 rounded accent-black">
+                    <div class="flex-1">
+                        <span class="text-[14px] font-bold text-black/80">${item.title}</span><span id="period-tag-${item.id}" class="hidden ml-2"></span>
+                        <p class="item-desc text-[12px] text-black/40 mt-1 hidden">${item.desc}</p>
+                    </div>
+                </label>
+            `).join('');
+
+            // 綁定事件監聽器
+            list.querySelectorAll('.contra-check').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    toggleContra(this.dataset.id);
+                });
+            });
+        }
+
+        function toggleContra(id) {
+            const label = document.getElementById(`label-${id}`);
+            const desc = label.querySelector('.item-desc');
+            const checkbox = label.querySelector('input');
+
+            if (checkbox.checked) {
+                if (id === 'none') {
+                    document.querySelectorAll('.contra-check').forEach(cb => { if (cb !== checkbox) cb.checked = false; });
+                    document.querySelectorAll('.item-desc').forEach(d => d.classList.add('hidden'));
+                    document.querySelectorAll('[id^="label-"]').forEach(l => {
+                        if (l.id !== 'label-none') l.classList.remove('bg-brand-primary/5', 'border-brand-primary/20');
+                    });
+                    selectedContraindications = ['none'];
+                } else {
+                    const noneCb = document.getElementById('label-none')?.querySelector('input');
+                    if (noneCb && noneCb.checked) {
+                        noneCb.checked = false;
+                        document.getElementById('label-none').classList.remove('bg-brand-primary/5', 'border-brand-primary/20');
+                        document.getElementById('label-none').querySelector('.item-desc').classList.add('hidden');
+                    }
+                    selectedContraindications = selectedContraindications.filter(c => c !== 'none');
+                    if (!selectedContraindications.includes(id)) selectedContraindications.push(id);
+                    if (id === 'period') openPeriodModal();
+                }
+                label.classList.add('bg-brand-primary/5', 'border-brand-primary/20');
+                desc.classList.remove('hidden');
+            } else {
+                selectedContraindications = selectedContraindications.filter(c => c !== id);
+                label.classList.remove('bg-brand-primary/5', 'border-brand-primary/20');
+                desc.classList.add('hidden');
+                
+                // 重置生理期標籤狀態
+                if (id === 'period') {
+                    periodDay = null;
+                    document.getElementById('period-result').classList.add('hidden');
+                    document.getElementById('period-tag-period').classList.add('hidden');
+                }
+            }
+            document.getElementById('health-notes-container').classList.toggle('hidden', !selectedContraindications.includes('other'));
+            checkFormValidity();
+        }
+
+        function openPeriodModal() { document.getElementById('period-modal').classList.remove('hidden'); }
+        function closePeriodModal() { document.getElementById('period-modal').classList.add('hidden'); checkFormValidity(); }
+        
+        function setPeriodDay(day) {
+            periodDay = day;
+            const res = document.getElementById('period-result');
+            const tag = document.getElementById('period-tag-period');
+            res.classList.remove('hidden');
+            if (day <= 3) {
+                res.className = "p-4 rounded-2xl bg-red-50 text-red-600 text-[13px] font-bold mt-4";
+                res.innerText = "⚠️ 建議改期：前 3 天留色率較受影響";
+                tag.innerText = "(第 " + day + " 天 - 不適宜)";
+                tag.className = "text-[11px] text-red-500 font-bold ml-2";
+            } else {
+                res.className = "p-4 rounded-2xl bg-green-50 text-green-600 text-[13px] font-bold mt-4";
+                res.innerText = "✅ 評估可：第 " + day + " 天可正常預約";
+                tag.innerText = "(第 " + day + " 天 - 通過)";
+                tag.className = "text-[11px] text-green-600 font-bold ml-2";
+            }
+            tag.classList.remove('hidden');
+            checkFormValidity();
+        }
+
+        function handleExperienceChange(radio) {
+            const suggestions = {
+                'new': 'first-time-suggestion',
+                'previous': 'previous-experience-suggestion',
+                'correction': 'correction-suggestion'
+            };
+            
+            Object.values(suggestions).forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            
+            const targetId = suggestions[radio.value];
+            if (targetId) {
+                document.getElementById(targetId).classList.remove('hidden');
+            }
+            checkFormValidity();
+        }
+
+        function handlePhotoPreview(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                // 限制檔案大小為 5MB，避免 Base64 過大導致 Google Apps Script 當機
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("⚠️ 檔案過大！請上傳小於 5MB 的照片。");
+                    input.value = "";
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    document.getElementById('upload-preview').classList.remove('hidden');
+                    photoBase64Data = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function resetPhoto(e) {
+            e.stopPropagation();
+            document.getElementById('brow-photo').value = '';
+            document.getElementById('upload-placeholder').classList.remove('hidden');
+            document.getElementById('upload-preview').classList.add('hidden');
+            photoBase64Data = "";
+        }
+
+        function handleDateChange() {
+            const dateStr = document.getElementById('date').value;
+            if(!dateStr) return;
+            const date = new Date(dateStr);
+            const timeSelect = document.getElementById('time');
+            
+            timeSelect.innerHTML = '<option value="">請選擇時段</option>';
+            timeSelect.disabled = false;
+            
+            if (date.getDay() === 0 || date.getDay() === 6) {
+                timeSelect.innerHTML += '<option value="09:00">09:00 AM</option><option value="14:00">14:00 PM</option><option value="19:00">19:00 PM</option>';
+            } else {
+                timeSelect.innerHTML += '<option value="19:00">19:00 PM (平日)</option>';
+            }
+            checkFormValidity();
+        }
+
+        function checkFormValidity() {
+            const btn = document.getElementById('submit-btn');
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const lastFive = document.getElementById('last-five').value.trim();
+            const agreement = document.getElementById('agreement').checked;
+            const experience = document.querySelector('input[name="brow_experience"]:checked');
+
+            const formsFilled = name !== "" && phone !== "" && date !== "" && time !== "" && 
+                                lastFive !== "" && lastFive.length === 5 && experience !== null;
+            
+            // 生理期的阻擋條件 -> 如果沒選天數或 <= 3 就不通過
+            const healthy = !selectedContraindications.some(id => {
+                if (id === 'period') return periodDay === null || periodDay <= 3;
+                const config = CONTRAINDICATIONS.find(c => c.id === id);
+                return config ? config.urgent : false;
+            });
+
+            const hasHealthSelection = selectedContraindications.length > 0;
+
+            if (agreement && formsFilled && healthy && hasHealthSelection) {
+                btn.disabled = false;
+                btn.className = "w-full py-6 rounded-[2rem] text-[16px] tracking-[0.4em] font-black bg-brand-dark text-white shadow-xl transition-all hover:bg-brand-primary active:scale-[0.98]";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full py-6 rounded-[2rem] text-[16px] tracking-[0.4em] font-black bg-brand-bg text-brand-primary opacity-50 cursor-not-allowed";
+            }
+        }
+
+        function copyToClipboard() {
+            const num = "111005579803";
+            navigator.clipboard.writeText(num).then(() => {
+                const btn = document.getElementById('copy-text');
+                const old = btn.innerText;
+                btn.innerText = "COPIED!";
+                setTimeout(() => btn.innerText = old, 2000);
+            });
+        }
+
+        // === 已經為您填入您專屬的 Google Apps Script 網址 ===
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVr8HVdThXs5SvJpnyYppgQ-DuXbschjMDDlHRt1Nt_NlIKFT9-Q6hBFwOQna3l9sm/exec";
+
+        document.getElementById('reservation-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const originalBtnText = btn.innerHTML;
+            
+            if (APPS_SCRIPT_URL === "您的_APPS_SCRIPT_URL_網址") {
+                alert("請先在下方代碼中設定 APPS_SCRIPT_URL 網址！");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> 提交中 Processing...';
+            lucide.createIcons();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                experience: document.querySelector('input[name="brow_experience"]:checked')?.value || '',
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                health: selectedContraindications.join(', '),
+                health_notes: document.getElementById('health-notes').value,
+                photo: photoBase64Data, 
+                deposit_last_five: document.getElementById('last-five').value,
+                other_notes: document.getElementById('other-notes').value,
+                timestamp: new Date().toLocaleString('zh-TW')
+            };
+
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-container').classList.remove('hidden');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+
+            } catch (error) {
+                console.error("Submission error:", error);
+                alert("提交失敗，請檢查網路連線或稍後再試。\n" + error.message);
+                btn.disabled = false;
+                btn.innerHTML = originalBtnText;
+                lucide.createIcons();
+            }
+        };
+    </script>
+
+</body></html>
